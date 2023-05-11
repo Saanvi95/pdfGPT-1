@@ -1,7 +1,7 @@
 import json
 from tempfile import _TemporaryFileWrapper
 
-import gradio as gr
+import streamlit as st
 import requests
 
 
@@ -54,34 +54,34 @@ def ask_api(
 title = 'PDF GPT'
 description = """ PDF GPT allows you to chat with your PDF file using Universal Sentence Encoder and Open AI. It gives hallucination free response than other tools as the embeddings are better than OpenAI. The returned response can even cite the page number in square brackets([]) where the information is located, adding credibility to the responses and helping to locate pertinent information quickly."""
 
-with gr.Blocks() as demo:
-    gr.Markdown(f'<center><h1>{title}</h1></center>')
-    gr.Markdown(description)
+with st.Blocks() as demo:
+    st.Markdown(f'<center><h1>{title}</h1></center>')
+    st.Markdown(description)
 
-    with gr.Row():
-        with gr.Group():
-            lcserve_host = gr.Textbox(
+    with st.Row():
+        with st.Group():
+            lcserve_host = st.Textbox(
                 label='Enter your API Host here',
                 value='http://localhost:8080',
                 placeholder='http://localhost:8080',
             )
-            gr.Markdown(
+            st.Markdown(
                 f'<p style="text-align:center">Get your Open AI API key <a href="https://platform.openai.com/account/api-keys">here</a></p>'
             )
-            openAI_key = gr.Textbox(
+            openAI_key = st.Textbox(
                 label='Enter your OpenAI API key here', type='password'
             )
-            pdf_url = gr.Textbox(label='Enter PDF URL here')
-            gr.Markdown("<center><h4>OR<h4></center>")
-            file = gr.File(
+            pdf_url = st.Textbox(label='Enter PDF URL here')
+            st.Markdown("<center><h4>OR<h4></center>")
+            file = st.File(
                 label='Upload your PDF/ Research Paper / Book here', file_types=['.pdf']
             )
-            question = gr.Textbox(label='Enter your question here')
-            btn = gr.Button(value='Submit')
+            question = st.Textbox(label='Enter your question here')
+            btn = st.Button(value='Submit')
             btn.style(full_width=True)
 
-        with gr.Group():
-            answer = gr.Textbox(label='The answer to your question is :')
+        with st.Group():
+            answer = st.Textbox(label='The answer to your question is :')
 
         btn.click(
             ask_api,
